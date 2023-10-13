@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     paddingBottom: Constants.statusBarHeight,
+    backgroundColor: theme.colors.white,
   },
   pictureContainer: {
     paddingLeft: 10,
