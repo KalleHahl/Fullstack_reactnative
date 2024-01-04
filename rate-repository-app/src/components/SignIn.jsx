@@ -1,4 +1,5 @@
 import Text from "./Text";
+import useSignIn from "../hooks/useSignIn";
 import { Pressable } from "react-native";
 import FormikTextInput from "./FormikTextInput";
 import { Formik } from "formik";
@@ -6,6 +7,7 @@ import { StyleSheet, View } from "react-native";
 import theme from "../theme";
 import Constants from "expo-constants";
 import * as yup from "yup";
+import { useNavigate } from "react-router-native";
 
 const initialValues = {
   username: "",
@@ -35,9 +37,23 @@ const styles = StyleSheet.create({
 });
 
 const SignIn = () => {
-  const onSubmit = (values) => {
-    console.log(values);
+
+  const navigate = useNavigate()
+  const [signIn] = useSignIn();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+
+    try {
+      const { data } = await signIn({ username, password });
+      console.log(data);
+      navigate("/")
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  
   return (
     <View style={styles.formContainer}>
       <Formik
