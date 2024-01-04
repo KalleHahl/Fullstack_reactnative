@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   },
   pictureContainer: {
     paddingLeft: 10,
+    marginRight: 20,
   },
   flexContainerUpper: {
     display: "flex",
@@ -22,13 +23,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingTop: Constants.statusBarHeight,
   },
+  descriptionText: {
+    flexGrow: 1,
+  },
   statItem: {
     display: "flex",
     alignItems: "center",
   },
   infoContainer: {
-    paddingLeft: 10,
-    display: "flex",
+    flexGrow: 1,
+    flexShrink: 1,
   },
   picture: {
     width: 50,
@@ -51,7 +55,7 @@ const DescriptionBox = ({ name, description, language }) => {
       <Text fontSize="subheading" fontWeight="bold">
         {name}
       </Text>
-      <Text>{description}</Text>
+      <Text style={styles.descriptionText}>{description}</Text>
       <Text style={styles.languageBox} fontWeight="bold">
         {language}
       </Text>
