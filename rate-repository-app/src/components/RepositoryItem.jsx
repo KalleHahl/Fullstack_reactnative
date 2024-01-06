@@ -1,4 +1,5 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Pressable } from "react-native";
+import * as Linking from 'expo-linking'
 import Text from "./Text";
 import theme from "../theme";
 import Constants from "expo-constants";
@@ -8,9 +9,9 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     paddingBottom: Constants.statusBarHeight,
     backgroundColor: theme.colors.white,
+    padding: 10
   },
   pictureContainer: {
-    paddingLeft: 10,
     marginRight: 20,
   },
   flexContainerUpper: {
@@ -22,6 +23,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     paddingTop: Constants.statusBarHeight,
+    paddingBottom: 15
+  
   },
   descriptionText: {
     flexGrow: 1,
@@ -47,6 +50,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: 100,
   },
+  gihubButton: {
+    backgroundColor: theme.colors.primary,
+    color: theme.colors.white,
+    padding: 10,
+    borderRadius: 5,
+    textAlign: "center",
+    height: 40,
+    display: "flex",
+    alignItems: "center",
+  }
 });
 
 const DescriptionBox = ({ name, description, language }) => {
@@ -72,7 +85,7 @@ const StatsBox = ({ stats, type }) => {
     </View>
   );
 };
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, link }) => {
   return (
     <View testID="repositoryItem" style={styles.container}>
       <View style={styles.flexContainerUpper}>
@@ -91,6 +104,9 @@ const RepositoryItem = ({ item }) => {
         <StatsBox stats={item.reviewCount} type="Reviews" />
         <StatsBox stats={item.ratingAverage} type="Rating" />
       </View>
+      {link && <Pressable  onPress={() => Linking.openURL(item.url)}>
+          <Text style={ styles.gihubButton} fontWeight="bold">Open in GitHub</Text>
+      </Pressable>}
     </View>
   );
 };
