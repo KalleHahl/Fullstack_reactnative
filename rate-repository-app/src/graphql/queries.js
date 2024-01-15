@@ -4,8 +4,13 @@ export const GET_REPOSITORIES = gql`
   query GetRepositories(
     $orderBy: AllRepositoriesOrderBy
     $orderDirection: OrderDirection
+    $searchKeyword: String
   ) {
-    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+    repositories(
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+      searchKeyword: $searchKeyword
+    ) {
       totalCount
       pageInfo {
         endCursor
@@ -34,10 +39,27 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const ME = gql`
-  query {
+  query getCurrentUser($includeReviews: Boolean = false) {
     me {
       id
       username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            repository {
+              url
+            }
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;

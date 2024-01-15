@@ -85,6 +85,17 @@ const AppBar = () => {
           </Link>
         )}
         {data.me && (
+          <Link to="/my_reviews">
+            <Text
+              style={styles.flexItem}
+              fontWeight="bold"
+              fontSize="subheading"
+            >
+              My reviews
+            </Text>
+          </Link>
+        )}
+        {data.me && (
           <Pressable onPress={handleLogOut}>
             <Text
               style={styles.flexItem}
