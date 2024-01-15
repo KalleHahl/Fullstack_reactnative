@@ -27,22 +27,22 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data, loading, error } = useQuery(ME)
-  const authStorage = useAuthStorage()
-  const apolloClient = useApolloClient()
+  const { data, loading, error } = useQuery(ME);
+  const authStorage = useAuthStorage();
+  const apolloClient = useApolloClient();
 
   const handleLogOut = async (event) => {
-    event.preventDefault()
-    await authStorage.removeAccessToken()
-    apolloClient.resetStore()
+    event.preventDefault();
+    await authStorage.removeAccessToken();
+    apolloClient.resetStore();
+  };
+
+  if (loading) return null;
+  if (error) {
+    Alert.alert("Error", "An error occured...");
+    return null;
   }
 
-  if (loading) return null
-  if (error) {
-    Alert.alert('Error', "An error occured...")
-    return null
-  }
-  
   return (
     <View style={styles.flexContainer}>
       <ScrollView horizontal>
@@ -51,15 +51,50 @@ const AppBar = () => {
             Repositories
           </Text>
         </Link>
-        {!data.me && <Link to="/signin">
-          <Text style={styles.flexItem} fontWeight="bold" fontSize="subheading">
-            Sign in
-          </Text>
-        </Link>}
-        {data.me &&
-          <Pressable onPress={handleLogOut}><Text style={styles.flexItem} fontWeight="bold" fontSize="subheading">
-            Sign out
-          </Text></Pressable>}
+        {!data.me && (
+          <Link to="/signin">
+            <Text
+              style={styles.flexItem}
+              fontWeight="bold"
+              fontSize="subheading"
+            >
+              Sign in
+            </Text>
+          </Link>
+        )}
+        {!data.me && (
+          <Link to="/signup">
+            <Text
+              style={styles.flexItem}
+              fontWeight="bold"
+              fontSize="subheading"
+            >
+              Sign up
+            </Text>
+          </Link>
+        )}
+        {data.me && (
+          <Link to="/create_review">
+            <Text
+              style={styles.flexItem}
+              fontWeight="bold"
+              fontSize="subheading"
+            >
+              Create a Review
+            </Text>
+          </Link>
+        )}
+        {data.me && (
+          <Pressable onPress={handleLogOut}>
+            <Text
+              style={styles.flexItem}
+              fontWeight="bold"
+              fontSize="subheading"
+            >
+              Sign out
+            </Text>
+          </Pressable>
+        )}
       </ScrollView>
     </View>
   );

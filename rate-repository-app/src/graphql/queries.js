@@ -1,8 +1,11 @@
 import { gql } from "@apollo/client";
 
 export const GET_REPOSITORIES = gql`
-  query {
-    repositories {
+  query GetRepositories(
+    $orderBy: AllRepositoriesOrderBy
+    $orderDirection: OrderDirection
+  ) {
+    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
       totalCount
       pageInfo {
         endCursor
@@ -53,6 +56,20 @@ export const GET_REPOSITORY = gql`
       reviewCount
       stargazersCount
       url
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;
